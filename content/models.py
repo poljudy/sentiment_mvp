@@ -26,7 +26,7 @@ class Article(models.Model):
     )
     uri = models.URLField(unique=True)
     title = models.TextField()
-    content_source = models.TextField()
+    content_source = models.TextField(default="", blank=True)
     content_clean = models.TextField(default="", blank=True)
     published_ts = models.DateTimeField()
     status = models.CharField(
