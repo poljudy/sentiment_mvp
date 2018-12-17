@@ -4,6 +4,8 @@
 >
 > A name for a slow song in Balkan, usually with a sentimental or a love theme.
 
+An MVP that parses content from an online publication, fetches the sentiment of the articles and displays results in a simple web app.
+
 ## Notes
 
 ### Pre-commit Hooks
