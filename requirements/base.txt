@@ -2,6 +2,7 @@ Django==2.1.4
 django-configurations==2.1
 django-environ==0.4.5
 feedparser==5.2.1
+pendulum==2.0.4
 psycopg2-binary==2.7.6.1
 readability-lxml==0.7
 requests==2.21.0
