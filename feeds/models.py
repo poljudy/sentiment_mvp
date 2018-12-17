@@ -8,7 +8,7 @@ class Feed(models.Model):
     )
     title = models.CharField(max_length=250)
     uri = models.URLField()
-    last_fetch_ts = models.DateTimeField()
+    last_fetch_ts = models.DateTimeField(blank=True, null=True)
 
     def __str__(self):
         return self.title
