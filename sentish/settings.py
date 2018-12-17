@@ -38,6 +38,8 @@ class BaseConfig(Configuration):
         "django.contrib.staticfiles",
         # 3rd party
         # project
+        "content",
+        "feeds",
     ]
 
     MIDDLEWARE = [
