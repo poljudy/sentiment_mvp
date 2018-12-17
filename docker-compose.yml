@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  postgres:
+    image: postgres:9.6  # version on GCP
+    restart: always
+    env_file:
+      - ./.env
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  # local development
+  web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      args:
+        - REQUIREMENTS_PATH=./requirements/dev.txt
+    restart: always
+    expose:
+      - "8020"
+    ports:
+      - "8020:8020"
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+    volumes:
+      - .:/app
+      - /usr/src/app/staticfiles
+    env_file:
+      - ./.env
+    environment:
+      - REQUIREMENTS_PATH=./requirements/dev.txt
+      - DJANGO_CONFIGURATION=DevConfig
+      - DEBUG=True
+    entrypoint: ./web_entrypoint.sh
+    command: python manage.py runserver_plus 0.0.0.0:8020
+
+volumes:
+  dbdata:

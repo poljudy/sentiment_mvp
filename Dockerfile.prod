@@ -1,0 +1,15 @@
+FROM python:3.6
+
+ARG REQUIREMENTS_PATH=./requirements/prod.txt
+
+COPY requirements/ ./requirements/
+RUN pip install -r $REQUIREMENTS_PATH
+
+RUN mkdir /app
+WORKDIR /app
+ADD . /app/
+
+ENV PYTHONUNBUFFERED 1
+ENV DJANGO_CONFIGURATION BaseConfig
+ENV ENV_PATH .env.prod
+RUN python manage.py collectstatic --noinput
