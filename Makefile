@@ -45,7 +45,7 @@ _django_manage:
 	@$(DOCKER_COMPOSE) -f $(DOCKER_COMPOSE_FILE) exec web python manage.py ${COMMAND}
 
 django_migrate:  ## `python manage.py migrate` command inside the container
-	$(MAKE) COMMAND=migrate _django_manage
+	$(MAKE) COMMAND="migrate" _django_manage
 
 django_makemigrations: ## `python manage.py makemigrations` command inside the container
 	$(MAKE) COMMAND=makemigrations _django_manage
