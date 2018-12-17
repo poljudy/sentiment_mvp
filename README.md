@@ -8,6 +8,26 @@ An MVP that parses content from an online publication, fetches the sentiment of 
 
 ## Notes
 
+### Development environment with Docker
+
+1. Create a new file `.env` based on `.env.template`. Fill in the empty values.
+
+2. Install docker and docker-compose.
+
+3. From root of the project run:
+
+    ```
+    make up
+    ```
+
+    This command will build Django application Docker image and run Django app on localhost on port 8020.
+
+4. Open Django application in browser:
+
+    ```
+    http://127.0.0.1:8020
+    ```
+
 ### Pre-commit Hooks
 
 Project uses [pre-commit](https://github.com/pre-commit/pre-commit) hooks. To use them for your local development install them with the following command:
