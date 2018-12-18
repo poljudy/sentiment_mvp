@@ -23,8 +23,11 @@ class ParseFeeds:
         for feed in Feed.objects.all():
             self.fetch_feed_items(feed)
 
-    def fetch_feed_items(self, feed):
+    def fetch_feed_items(self, feed: Feed):
         """Go through each item in feed and save it if new.
+
+        Args:
+            feed: Feed object from the db
         """
         live_feed = feedparser.parse(feed.uri)
         for item in live_feed.entries:

@@ -1,14 +1,71 @@
 import pendulum
+import vcr
 from django.test import TestCase
 from content.models import Article
-from content.tests.factories import ArticleFactory
+from content.tests.factories import PublisherFactory, ArticleFactory
 from feeds.logic import ParseFeeds
-from feeds.models import FeedItem
+from feeds.models import Feed, FeedItem
 from feeds.tests.factories import FeedFactory, FeedItemFactory
 from feedparser import FeedParserDict
 
 
+VCR_ROOT = "feeds/tests/fixtures/vcr"
+
+
 class ParseFeedsTestCase(TestCase):
+    @vcr.use_cassette(f"{VCR_ROOT}/parse_feeds__success.yaml")
+    def test_parse_feeds__sucess(self):
+        # first feed created as part of initial data migration
+        feed_1 = Feed.objects.get(uri="https://www.forbes.com/real-time/feed2/")
+        feed_2 = FeedFactory(uri="https://www.forbes.com/business/feed/")
+
+        assert FeedItem.objects.filter(feed=feed_1).count() == 0
+        assert FeedItem.objects.filter(feed=feed_2).count() == 0
+
+        parser = ParseFeeds()
+        parser.parse_feeds()
+
+        assert FeedItem.objects.filter(feed=feed_1).count() == 20
+        assert FeedItem.objects.filter(feed=feed_2).count() == 99
+
+    @vcr.use_cassette(f"{VCR_ROOT}/fetch_feed__success.yaml")
+    def test_fetch_feed_items__success(self):
+        # pendulum has builtin mechanism for mocking now
+        MOCKED_LAST_FETCH_TS = pendulum.datetime(2018, 12, 18, 12, 00)
+        pendulum.set_test_now(MOCKED_LAST_FETCH_TS)
+
+        feed = FeedFactory(uri="https://www.forbes.com/energy/feed/")
+
+        assert FeedItem.objects.filter(feed=feed).count() == 0
+
+        parser = ParseFeeds()
+        parser.fetch_feed_items(feed)
+
+        feed.refresh_from_db()
+        assert FeedItem.objects.filter(feed=feed).count() == 99
+        assert feed.last_fetch_ts == MOCKED_LAST_FETCH_TS
+
+    @vcr.use_cassette(f"{VCR_ROOT}/fetch_feed__not_rss.yaml")
+    def test_fetch_feed_items__not_rss(self):
+        feed = FeedFactory(uri="https://www.forbes.com/")
+
+        assert FeedItem.objects.filter(feed=feed).count() == 0
+
+        parser = ParseFeeds()
+        parser.fetch_feed_items(feed)
+
+        assert FeedItem.objects.filter(feed=feed).count() == 0
+
+    def test_fetch_feed_items__not_url(self):
+        feed = FeedFactory(uri="dummy")
+
+        assert FeedItem.objects.filter(feed=feed).count() == 0
+
+        parser = ParseFeeds()
+        parser.fetch_feed_items(feed)
+
+        assert FeedItem.objects.filter(feed=feed).count() == 0
+
     def test_save_single_item__is_created_with_article(self):
         feed = FeedFactory()
 
