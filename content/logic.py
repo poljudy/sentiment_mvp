@@ -12,8 +12,10 @@ logger = logging.getLogger(__name__)
 
 
 class ParseContent:
-    def __init__(self):
-        self.parse_publishers()
+    """Parses saved article content.
+
+    Use .parse_publishers() method to start parsing all publishers articles.
+    """
 
     def parse_publishers(self):
         """Go through all the publishers in the system and parse new articles.

@@ -13,15 +13,9 @@ logger = logging.getLogger(__name__)
 
 class ParseFeeds:
     """Parses feeds rss pages and saves new entries to the db.
+
+    Use .parse_feeds() method to start fetching feed data.
     """
-
-    def __init__(self):
-        """Set feed instance as attribute.
-
-        Args:
-            feed: Feed object from the db
-        """
-        self.parse_feeds()
 
     def parse_feeds(self):
         """Go through all the feeds in the system and fetch new articles.
