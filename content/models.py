@@ -36,7 +36,7 @@ class Article(models.Model):
     status = models.CharField(
         choices=STATUS_OPTIONS, default=STATUS_CREATED, max_length=30
     )
-    sentiment_score = models.IntegerField(default=0)
+    sentiment_score = models.FloatField(default=0)
     sentiment_details = JSONField(default=dict)
     sentiment_calculated_ts = models.DateTimeField(blank=True, null=True)
 
