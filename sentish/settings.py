@@ -103,6 +103,9 @@ class BaseConfig(Configuration):
     USE_L10N = True
     USE_TZ = True
 
+    # IBM watson settings
+    WATSON_API_VERSION = "2018-11-16"
+
 
 class PostgresDBConfig:
     """Postgres DB connection defined."""
@@ -163,3 +166,11 @@ class TestConfig(PostgresDBConfig, BaseConfig):
 
         # run test suite with dockerized postgres, but from local machine
         DATABASES["default"]["HOST"] = "localhost"
+
+
+class CITestConfig(PostgresDBConfig, BaseConfig):
+    """Django Configuration class with specifics for the test suite environment
+    when run on Circle CI.
+    """
+
+    pass
