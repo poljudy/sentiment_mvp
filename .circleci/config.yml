@@ -31,6 +31,8 @@ jobs:
       # run tests!
       - run:
           name: run tests
+          environment:
+              ENV_PATH: .env.test
           command: |
             . ~/venv/bin/activate
             pip install -r requirements/test.txt
