@@ -1,8 +1,8 @@
 # Sentish
 
-> *Sentish*  (`ˈsɛntɪʃ`)
+> *Sentish*  `ˈsɛntɪʃ`
 >
-> A name for a slow song in Balkan, usually with a sentimental or a love theme.
+> A common name for a slow song in the South Slavic languages, usually with a sentimental or a love theme.
 
 An MVP that parses content from an online publication, fetches the sentiment of the articles and displays results in a simple web app.
 
