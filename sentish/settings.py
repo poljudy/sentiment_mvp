@@ -125,7 +125,19 @@ class PostgresDBConfig:
     }
 
 
-class DevConfig(PostgresDBConfig, BaseConfig):
+class CeleryConfig:
+    """Celery Task Queue configs."""
+
+    # URL formated as `redis://:password@hostname:port/db_number`
+    BROKER_URL = ENV.str("CELERY_REDIS_URL", "redis://redis:6379/0")
+    CELERY_BROKER_URL = BROKER_URL
+    CELERY_RESULT_BACKEND = BROKER_URL
+    CELERY_ACCEPT_CONTENT = ["application/json"]
+    CELERY_TASK_SERIALIZER = "json"
+    CELERY_RESULT_SERIALIZER = "json"
+
+
+class DevConfig(PostgresDBConfig, CeleryConfig, BaseConfig):
     """Django Configuration class with specifics for the local environment."""
 
     DEBUG = True
@@ -150,7 +162,7 @@ class DevConfig(PostgresDBConfig, BaseConfig):
     DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_debug_toolbar}
 
 
-class ProdConfig(PostgresDBConfig, BaseConfig):
+class ProdConfig(PostgresDBConfig, CeleryConfig, BaseConfig):
     """Django Configuration class with specifics for the production environment."""
 
     # This is safe for a kubernetes installation

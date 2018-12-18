@@ -11,6 +11,9 @@ services:
     ports:
       - "5432:5432"
 
+  redis:
+    image: "redis:alpine"
+
   # local development
   web:
     build:
@@ -27,6 +30,7 @@ services:
       - postgres:postgres
     depends_on:
       - postgres
+      - redis
     volumes:
       - .:/app
       - /usr/src/app/staticfiles
@@ -38,6 +42,53 @@ services:
       - DEBUG=True
     entrypoint: ./web_entrypoint.sh
     command: python manage.py runserver_plus 0.0.0.0:8020
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      args:
+        - REQUIREMENTS_PATH=./requirements/dev.txt
+    command: celery -A sentish worker -l info
+    env_file:
+      - ./.env
+    environment:
+      - REQUIREMENTS_PATH=./requirements/dev.txt
+      - DJANGO_CONFIGURATION=DevConfig
+      - DEBUG=True
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: ./Dockerfile.dev
+      args:
+        - REQUIREMENTS_PATH=./requirements/dev.txt
+    command: celery -A sentish beat -l info --pidfile=celery_beat.pid
+    env_file:
+      - ./.env
+    environment:
+      - REQUIREMENTS_PATH=./requirements/dev.txt
+      - DJANGO_CONFIGURATION=DevConfig
+      - DEBUG=True
+    entrypoint: [./web_entrypoint.sh]
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+      - redis
+
+  flower:
+    image: mher/flower
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - FLOWER_PORT=5555
+    ports:
+      - 5555:5555
 
 volumes:
   dbdata:
