@@ -1,10 +1,17 @@
 import logging
+import pendulum
 import requests
+from django.conf import settings
 from django.db.models import QuerySet
 from django.utils.html import strip_tags
 from typing import Optional
 from requests.exceptions import ConnectionError
 from readability import Document
+from watson_developer_cloud import NaturalLanguageUnderstandingV1, WatsonApiException
+from watson_developer_cloud.natural_language_understanding_v1 import (
+    Features,
+    SentimentOptions,
+)
 from .models import Publisher, Article
 
 
@@ -90,3 +97,58 @@ class ParseContent:
         clean = " ".join(clean.split())
 
         return clean
+
+
+class SentimentCalculate:
+    """Calculates sentiment score for given article.
+
+    Done with IBM Watson NLU.
+    """
+
+    def __init__(self, article: Article):
+        self.article = article
+
+    def get_and_set_sentiment(self):
+        """Get IBM Watson sentiment analysis reponse and save it on
+        the article instance.
+        """
+        nlu = self.get_watson_nlu()
+
+        try:
+            response = nlu.analyze(
+                text=self.article.content_clean,
+                features=Features(sentiment=SentimentOptions()),
+            ).get_result()
+
+            self.save_watson_response(response)
+
+        except WatsonApiException as e:
+            # if api key is incorrect etc.
+            self.article.set_status(Article.STATUS_SENTIMENT_ERROR)
+            logger.exception(e)
+
+    def get_watson_nlu(self) -> NaturalLanguageUnderstandingV1:
+        """Return an instance of IBM Watson's NaturalLanguageUnderstandingV1
+        with auth set.
+        """
+        return NaturalLanguageUnderstandingV1(
+            version=settings.WATSON_API_VERSION,
+            iam_apikey=settings.ENV.str("WATSON_IAM_APIKEY").strip("\"'"),
+            url=settings.WATSON_URL,
+        )
+
+    def save_watson_response(self, response: dict):
+        """Save IBM Watson response to article instance.
+
+        Args:
+            response: watson formated dict with sentiment results
+        """
+        if response.get("sentiment"):
+            self.article.sentiment_score = response["sentiment"]["document"]["score"]
+            self.article.sentiment_calculated_ts = pendulum.now("UTC")
+            self.article.sentiment_details = response
+            self.article.save()
+
+            self.article.set_status(Article.STATUS_SENTIMENT_SET)
+        else:
+            self.article.set_status(Article.STATUS_SENTIMENT_ERROR)

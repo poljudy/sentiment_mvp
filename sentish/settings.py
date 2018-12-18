@@ -105,6 +105,9 @@ class BaseConfig(Configuration):
 
     # IBM watson settings
     WATSON_API_VERSION = "2018-11-16"
+    WATSON_URL = (
+        "https://gateway-lon.watsonplatform.net/natural-language-understanding/api"
+    )
 
 
 class PostgresDBConfig:
