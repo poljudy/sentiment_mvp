@@ -37,3 +37,14 @@ class Article(models.Model):
 
     def __str__(self):
         return f"{self.publisher.name} | {self.title}"
+
+    def set_status(self, status: str):
+        """Set status from choices in Article.STATUS_OPTIONS.
+
+        Args:
+            status: one of possible STATUS_OPTIONS
+        """
+        assert status in dict(self.STATUS_OPTIONS).keys()
+
+        self.status = status
+        self.save()
