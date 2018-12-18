@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import JSONField
 
 
 class Publisher(models.Model):
@@ -13,11 +14,15 @@ class Article(models.Model):
     STATUS_CREATED = "created"
     STATUS_CONTENT_FETCHED = "content_fetched"
     STATUS_RESPONSE_ERROR = "response_error"
+    STATUS_SENTIMENT_SET = "sentiment_set"
+    STATUS_SENTIMENT_ERROR = "sentiment_error"
 
     STATUS_OPTIONS = (
         (STATUS_CREATED, "Created"),
         (STATUS_CONTENT_FETCHED, "Content Fetched"),
         (STATUS_RESPONSE_ERROR, "Response Error"),
+        (STATUS_SENTIMENT_SET, "Sentiment Set"),
+        (STATUS_SENTIMENT_ERROR, "Sentiment Error"),
     )
 
     publisher = models.ForeignKey(
@@ -31,6 +36,9 @@ class Article(models.Model):
     status = models.CharField(
         choices=STATUS_OPTIONS, default=STATUS_CREATED, max_length=30
     )
+    sentiment_score = models.IntegerField(default=0)
+    sentiment_details = JSONField(default=dict)
+    sentiment_calculated_ts = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         ordering = ("-published_ts",)
