@@ -1,5 +1,7 @@
 # Sentish
 
+[![CircleCI](https://circleci.com/gh/mislavcimpersak/sentish/tree/master.svg?style=svg)](https://circleci.com/gh/mislavcimpersak/sentish/tree/master)
+
 > *Sentish*  `ˈsɛntɪʃ`
 >
 > A common name for a slow song in the South Slavic languages, usually with a sentimental or a love theme.
