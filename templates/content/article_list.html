@@ -17,7 +17,7 @@
                     <a href="{{ article.uri }}">{{ article.title }}</a>
                 </td>
                 <td>{{ article.published_ts }}</td>
-                <td>{{ article.sentiment_score }}</td>
+                <td class="alert alert-{% if article.sentiment_score > 0 %}success{% elif article.sentiment_score < 0.0 %}danger{% else %}info{% endif %}">{{ article.sentiment_score }}</td>
             </tr>
             {% endfor %}
         </tbody>
