@@ -84,5 +84,9 @@ class ParseContent:
         Returns:
             content cleaned from html tags
         """
-        clean = strip_tags(content).strip(" \n")
+        # clean from tags
+        clean = strip_tags(content)
+        # clean from all the extra whitespace
+        clean = " ".join(clean.split())
+
         return clean
