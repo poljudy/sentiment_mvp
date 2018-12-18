@@ -11,14 +11,13 @@ class Publisher(models.Model):
 
 class Article(models.Model):
     STATUS_CREATED = "created"
-    STATUS_PARSING_STARTED = "parsing_started"
-    STATUS_PARSING_FINISHED = "parsing_finished"
-    STATUS_PARSING_ERROR = "parsing_error"
+    STATUS_CONTENT_FETCHED = "content_fetched"
+    STATUS_RESPONSE_ERROR = "response_error"
+
     STATUS_OPTIONS = (
         (STATUS_CREATED, "Created"),
-        (STATUS_PARSING_STARTED, "Parsing Started"),
-        (STATUS_PARSING_FINISHED, "Parsing Finished"),
-        (STATUS_PARSING_ERROR, "Parsing Error"),
+        (STATUS_CONTENT_FETCHED, "Content Fetched"),
+        (STATUS_RESPONSE_ERROR, "Response Error"),
     )
 
     publisher = models.ForeignKey(
