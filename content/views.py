@@ -9,5 +9,4 @@ class ArticleListView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        # TODO filter only articles with sentiment
-        return self.model.objects.all()
+        return self.model.objects.filter(status=Article.STATUS_SENTIMENT_SET)

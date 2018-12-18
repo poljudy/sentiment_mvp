@@ -7,6 +7,7 @@
             <tr>
                 <th>Title</th>
                 <th>Date Published</th>
+                <th>Sentiment</th>
             </tr>
         </thead>
         <tbody>
@@ -16,6 +17,7 @@
                     <a href="{{ article.uri }}">{{ article.title }}</a>
                 </td>
                 <td>{{ article.published_ts }}</td>
+                <td>{{ article.sentiment_score }}</td>
             </tr>
             {% endfor %}
         </tbody>
