@@ -1,0 +1,93 @@
+interactions:
+- request:
+    body: grant_type=urn%3Aibm%3Aparams%3Aoauth%3Agrant-type%3Aapikey&apikey=znjkwmmD-myATKVq0QPs03BCp8nYfqqgwccPi97pkN1e&response_type=cloud_iam
+    headers:
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Yng6Yng=]
+      Connection: [keep-alive]
+      Content-Length: ['135']
+      Content-type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.21.0]
+      accept: [application/json]
+    method: POST
+    uri: https://iam.bluemix.net/identity/token
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Language: [en-US]
+      Content-Length: ['1763']
+      Content-Type: [application/json]
+      Date: ['Wed, 19 Dec 2018 01:56:40 GMT']
+      Set-Cookie: [sessioncookie=0328b5d9547b2622788fd8c3ae7f014c; Path=/; Secure;
+          HttpOnly]
+      Transaction-Id: [7cf67f49551a4bbd86e84054e1744789]
+      Vary: [Accept-Encoding]
+      X-Powered-By: [Servlet/3.1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"features": {"sentiment": {}}, "text": "Today is very sunny. Doggs are
+      running."}'
+    headers:
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Bearer eyJraWQiOiIyMDE3MTAzMC0wMDowMDowMCIsImFsZyI6IlJTMjU2In0.eyJpYW1faWQiOiJpYW0tU2VydmljZUlkLTM0NmIwNzljLWVjOGItNGJjYi1iMTU1LTJmMzIzNzZiNGRjNyIsImlkIjoiaWFtLVNlcnZpY2VJZC0zNDZiMDc5Yy1lYzhiLTRiY2ItYjE1NS0yZjMyMzc2YjRkYzciLCJyZWFsbWlkIjoiaWFtIiwiaWRlbnRpZmllciI6IlNlcnZpY2VJZC0zNDZiMDc5Yy1lYzhiLTRiY2ItYjE1NS0yZjMyMzc2YjRkYzciLCJzdWIiOiJTZXJ2aWNlSWQtMzQ2YjA3OWMtZWM4Yi00YmNiLWIxNTUtMmYzMjM3NmI0ZGM3Iiwic3ViX3R5cGUiOiJTZXJ2aWNlSWQiLCJ1bmlxdWVfaW5zdGFuY2VfY3JucyI6WyJjcm46djE6Ymx1ZW1peDpwdWJsaWM6bmF0dXJhbC1sYW5ndWFnZS11bmRlcnN0YW5kaW5nOmV1LWdiOmEvOGY5NGIyMjBiOTliNDhmMDk2ODNlZjY1ZGQ3YjQ4ODg6NDU3MDdiOTYtMTMwYi00NzQ0LWE2NmEtYjFjMTY3YzJhY2MyOjoiXSwiYWNjb3VudCI6eyJ2YWxpZCI6dHJ1ZSwiYnNzIjoiOGY5NGIyMjBiOTliNDhmMDk2ODNlZjY1ZGQ3YjQ4ODgifSwiaWF0IjoxNTQ1MTg0NjAwLCJleHAiOjE1NDUxODgyMDAsImlzcyI6Imh0dHBzOi8vaWFtLmJsdWVtaXgubmV0L2lkZW50aXR5IiwiZ3JhbnRfdHlwZSI6InVybjppYm06cGFyYW1zOm9hdXRoOmdyYW50LXR5cGU6YXBpa2V5Iiwic2NvcGUiOiJpYm0gb3BlbmlkIiwiY2xpZW50X2lkIjoiYngiLCJhY3IiOjEsImFtciI6WyJwd2QiXX0.a0p8cpWXpqPj-0ppPpeLlnZNesLRB3aU7pU6gwC7cKHpJUiSY4oHSW_XBl7B0Lph-fFF_uMw8uOvcqYsRqsgFoF1b2g_9m-sH7Fo3sRpLr7YIxV7hgSlD9gSLKShJhuyTNuo53ff64ImJS0w1_mWS7reeCbb1477t4sGDV6rCfBTmF8FqHJN9x4D15csSnCRXaCbCyBDpZ3S1gmt8Z1sHjR8Do8b5Vt0N4YcqqMpxkISM05qW5UK3fBHIPjD3donryIFaIBieIf52KwIMow1AaENV59cx0FMf0UXYvQDXaB4FsYhvH_lq5b_UAUHsoRdp63SWIK3evyMiHbD6lAZ3Q]
+      Connection: [keep-alive]
+      Content-Length: ['82']
+      accept: [application/json]
+      content-type: [application/json]
+      user-agent: [watson-apis-python-sdk-2.5.1 Darwin 18.2.0 3.6.5]
+    method: POST
+    uri: https://gateway-lon.watsonplatform.net/natural-language-understanding/api/v1/analyze?version=2018-11-16
+  response:
+    body: {string: "{\n  \"usage\": {\n    \"text_units\": 1,\n    \"text_characters\":
+        39,\n    \"features\": 1\n  },\n  \"sentiment\": {\n    \"document\": {\n
+        \     \"score\": 0.958144,\n      \"label\": \"positive\"\n    }\n  },\n  \"language\":
+        \"en\"\n}"}
+    headers:
+      Cache-Control: ['no-cache, no-store']
+      Connection: [keep-alive]
+      Content-Length: ['203']
+      Content-Type: [application/json; charset=utf-8]
+      Date: ['Wed, 19 Dec 2018 01:56:41 GMT']
+      Pragma: [no-cache]
+      content-security-policy: [default-src 'none']
+      x-content-type-options: [nosniff]
+      x-dp-watson-tran-id: [4a10a961d6f004fdf16b54dc6f465cf2]
+      x-frame-options: [DENY]
+      x-global-transaction-id: [4a10a961d6f004fdf16b54dc6f465cf2]
+      x-xss-protection: [1; mode=block]
+    status: {code: 200, message: OK}
+version: 1

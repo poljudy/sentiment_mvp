@@ -1,0 +1,83 @@
+interactions:
+- request:
+    body: grant_type=urn%3Aibm%3Aparams%3Aoauth%3Agrant-type%3Aapikey&apikey=znjkwmmD-myATKVq0QPs03BCp8nYfqqgwccPi97pkN1e&response_type=cloud_iam
+    headers:
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Basic Yng6Yng=]
+      Connection: [keep-alive]
+      Content-Length: ['135']
+      Content-type: [application/x-www-form-urlencoded]
+      User-Agent: [python-requests/2.21.0]
+      accept: [application/json]
+    method: POST
+    uri: https://iam.bluemix.net/identity/token
+  response:
+    body:
+      string: !!binary |
+        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
+    headers:
+      Connection: [keep-alive]
+      Content-Encoding: [gzip]
+      Content-Language: [en-US]
+      Content-Length: ['1763']
+      Content-Type: [application/json]
+      Date: ['Wed, 19 Dec 2018 01:54:34 GMT']
+      Set-Cookie: [sessioncookie=8ffe85c5971eda144d39d0e85a6c2d89; Path=/; Secure;
+          HttpOnly]
+      Transaction-Id: [aeb121357d014fb683c041a405f9ce80]
+      Vary: [Accept-Encoding]
+      X-Powered-By: [Servlet/3.1]
+    status: {code: 200, message: OK}
+- request:
+    body: '{"features": {"sentiment": {}}, "text": ""}'
+    headers:
+      Accept-Encoding: ['gzip, deflate']
+      Authorization: [Bearer eyJraWQiOiIyMDE3MTAzMC0wMDowMDowMCIsImFsZyI6IlJTMjU2In0.eyJpYW1faWQiOiJpYW0tU2VydmljZUlkLTM0NmIwNzljLWVjOGItNGJjYi1iMTU1LTJmMzIzNzZiNGRjNyIsImlkIjoiaWFtLVNlcnZpY2VJZC0zNDZiMDc5Yy1lYzhiLTRiY2ItYjE1NS0yZjMyMzc2YjRkYzciLCJyZWFsbWlkIjoiaWFtIiwiaWRlbnRpZmllciI6IlNlcnZpY2VJZC0zNDZiMDc5Yy1lYzhiLTRiY2ItYjE1NS0yZjMyMzc2YjRkYzciLCJzdWIiOiJTZXJ2aWNlSWQtMzQ2YjA3OWMtZWM4Yi00YmNiLWIxNTUtMmYzMjM3NmI0ZGM3Iiwic3ViX3R5cGUiOiJTZXJ2aWNlSWQiLCJ1bmlxdWVfaW5zdGFuY2VfY3JucyI6WyJjcm46djE6Ymx1ZW1peDpwdWJsaWM6bmF0dXJhbC1sYW5ndWFnZS11bmRlcnN0YW5kaW5nOmV1LWdiOmEvOGY5NGIyMjBiOTliNDhmMDk2ODNlZjY1ZGQ3YjQ4ODg6NDU3MDdiOTYtMTMwYi00NzQ0LWE2NmEtYjFjMTY3YzJhY2MyOjoiXSwiYWNjb3VudCI6eyJ2YWxpZCI6dHJ1ZSwiYnNzIjoiOGY5NGIyMjBiOTliNDhmMDk2ODNlZjY1ZGQ3YjQ4ODgifSwiaWF0IjoxNTQ1MTg0NDczLCJleHAiOjE1NDUxODgwNzMsImlzcyI6Imh0dHBzOi8vaWFtLmJsdWVtaXgubmV0L2lkZW50aXR5IiwiZ3JhbnRfdHlwZSI6InVybjppYm06cGFyYW1zOm9hdXRoOmdyYW50LXR5cGU6YXBpa2V5Iiwic2NvcGUiOiJpYm0gb3BlbmlkIiwiY2xpZW50X2lkIjoiYngiLCJhY3IiOjEsImFtciI6WyJwd2QiXX0.Lpu9x66ALBoMZCkY7bwl-jIu6I2NoUkjcNM5g4yKPicWhuhQG6J1diEQx9TNVZSZajIIl0pDQBePQEpGtaUyXimDXY7tCrGfMv-HDWW8rUIzLVm--TwR0y3ohc_BZT3ppYbVoVCtR17b9mVs9cQ2yFkRoctE5weOcTFylNV5zJXC4ThSv7TqZJRxUTdLer1HpfYHuXo8nKIO0Ah4DG_UXOOoHa69cyLIReH4bDYcytiDQMWkMaK-yVUsAZpyVJtwlN4X0RHCEWemGFYImJjFLIvCZ_gk-T7TOQW7XhfwfANy0Scrs-jy2as48eEjzhVWhJUnS-Bu5V3klBDsmnMc9g]
+      Connection: [keep-alive]
+      Content-Length: ['43']
+      accept: [application/json]
+      content-type: [application/json]
+      user-agent: [watson-apis-python-sdk-2.5.1 Darwin 18.2.0 3.6.5]
+    method: POST
+    uri: https://example.com/v1/analyze?version=2018-11-16
+  response:
+    body: {string: '{"success": false, "errors": [{ "message": "", "code": 404}]}'}
+    headers:
+      Cache-Control: [max-age=604800]
+      Content-Length: ['61']
+      Content-Type: [text/html; charset=UTF-8]
+      Date: ['Wed, 19 Dec 2018 01:54:34 GMT']
+      Expires: ['Wed, 26 Dec 2018 01:54:34 GMT']
+      Server: [EOS (vny006/0452)]
+    status: {code: 404, message: Not Found}
+version: 1

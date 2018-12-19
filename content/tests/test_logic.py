@@ -1,5 +1,5 @@
 import vcr
-from django.test import TestCase
+from django.test import TestCase, override_settings
 from content.logic import SentimentCalculate, ParseContent
 from content.models import Article
 from content.tests.factories import ArticleFactory
@@ -9,6 +9,32 @@ VCR_ROOT = "content/tests/fixtures/vcr"
 
 
 class SentimentCalculateTestCase(TestCase):
+    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__success.yaml")
+    def test_get_and_set_sentiment__success(self):
+        article = ArticleFactory(
+            status=Article.STATUS_CONTENT_FETCHED,
+            content_clean="Today is very sunny. Doggs are running.",
+        )
+
+        sentiment_calculate = SentimentCalculate(article)
+        sentiment_calculate.get_and_set_sentiment()
+
+        article.refresh_from_db()
+
+        assert article.status == Article.STATUS_SENTIMENT_SET
+
+    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__bad_url.yaml")
+    @override_settings(WATSON_URL="https://example.com")
+    def test_get_and_set_sentiment__bad_url(self):
+        article = ArticleFactory(status=Article.STATUS_CONTENT_FETCHED)
+
+        sentiment_calculate = SentimentCalculate(article)
+        sentiment_calculate.get_and_set_sentiment()
+
+        article.refresh_from_db()
+
+        assert article.status == Article.STATUS_SENTIMENT_ERROR
+
     def test_save_watson_response__success(self):
         SCORE = 0.472_614
         WATSON_RESPONSE = {
