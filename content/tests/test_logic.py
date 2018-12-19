@@ -1,9 +1,47 @@
 import vcr
 from django.test import TestCase
-from content.logic import ParseContent
+from content.logic import SentimentCalculate, ParseContent
+from content.models import Article
+from content.tests.factories import ArticleFactory
 
 
 VCR_ROOT = "content/tests/fixtures/vcr"
+
+
+class SentimentCalculateTestCase(TestCase):
+    def test_save_watson_response__success(self):
+        SCORE = 0.472_614
+        WATSON_RESPONSE = {
+            "usage": {"features": 1, "text_units": 1, "text_characters": 6406},
+            "language": "en",
+            "sentiment": {"document": {"label": "positive", "score": SCORE}},
+        }
+
+        article = ArticleFactory(status=Article.STATUS_CONTENT_FETCHED)
+
+        sentiment_calculate = SentimentCalculate(article)
+
+        sentiment_calculate.save_watson_response(WATSON_RESPONSE)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score == SCORE
+        assert article.sentiment_details == WATSON_RESPONSE
+        assert article.status == Article.STATUS_SENTIMENT_SET
+
+    def test_save_watson_response__error(self):
+        WATSON_RESPONSE = {}
+
+        article = ArticleFactory(status=Article.STATUS_CONTENT_FETCHED)
+
+        sentiment_calculate = SentimentCalculate(article)
+
+        sentiment_calculate.save_watson_response(WATSON_RESPONSE)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score == 0
+        assert article.status == Article.STATUS_SENTIMENT_ERROR
 
 
 class ParseContentTestCase(TestCase):
