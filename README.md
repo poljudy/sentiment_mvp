@@ -87,3 +87,5 @@ For a quick deplyoment, a shortcut make target was created:
 ```bash
 make deploy
 ```
+
+For production `.env.prod` must exist when building the image. Create it from `.env.template` and populate it with production values.
