@@ -8,6 +8,14 @@
 
 An MVP that parses content from an online publication, fetches the sentiment of the articles and displays results in a simple web app.
 
+## Rationale
+
+App periodically fetches newest articles from an online publication (Forbes). For it, it uses [Forbes realt-time RSS feed](https://www.forbes.com/real-time/feed2/).
+
+Second period task fetches the content of the articles, cleans it and uses [IBM Watson's NLU](https://www.ibm.com/watson/services/natural-language-understanding/) to get a sentiment score.
+
+All processed articles with their accompanying scores are available [online](https://sentish.solvomon.com/).
+
 ## Notes
 
 ### Development environment with Docker
