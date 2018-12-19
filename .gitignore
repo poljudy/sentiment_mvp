@@ -109,3 +109,6 @@ venv.bak/
 
 # terraform
 *.terraform
+terraform.tfvars
+terraform.tfstate.backup
+gcp_credentials.json
