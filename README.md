@@ -27,7 +27,7 @@ All processed articles with their accompanying scores are available [online](htt
 3. From root of the project run:
 
     ```
-    make up
+    make start
     ```
 
     This command will build Django application Docker image and run Django app on localhost on port 8020.
