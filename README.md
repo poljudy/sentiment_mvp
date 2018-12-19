@@ -89,7 +89,7 @@ to set the infra or modify it.
 
 #### (Re)deplyoment
 
-Main app and celery worker/beat are deplyed in k8s cluster.
+Main app and celery worker/beat are deplyed in a kubernetes cluster.
 For a quick deplyoment, a shortcut make target was created:
 
 ```bash
