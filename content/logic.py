@@ -112,11 +112,11 @@ class ParseContent:
 
             article.set_status(Article.STATUS_CONTENT_FETCHED)
 
-            self.get_article_sentiment_score(article)
+            self.set_article_sentiment_score(article)
         else:
             article.set_status(Article.STATUS_RESPONSE_ERROR)
 
-    def get_article_sentiment_score(self, article: Article):
+    def set_article_sentiment_score(self, article: Article):
         """Calculate sentiment score for article.
 
         Args:

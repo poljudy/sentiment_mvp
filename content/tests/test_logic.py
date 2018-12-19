@@ -71,6 +71,37 @@ class SentimentCalculateTestCase(TestCase):
 
 
 class ParseContentTestCase(TestCase):
+    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__success.yaml")
+    def test_set_article_sentiment_score__success(self):
+        article = ArticleFactory(
+            status=Article.STATUS_CONTENT_FETCHED,
+            content_clean="Today is very sunny. Doggs are running.",
+        )
+
+        parser = ParseContent()
+        parser.set_article_sentiment_score(article)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score != 0
+        assert article.status == Article.STATUS_SENTIMENT_SET
+
+    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__bad_url.yaml")
+    @override_settings(WATSON_URL="https://example.com")
+    def test_set_article_sentiment_score__error(self):
+        article = ArticleFactory(
+            status=Article.STATUS_CONTENT_FETCHED,
+            content_clean="Today is very sunny. Doggs are running.",
+        )
+
+        parser = ParseContent()
+        parser.set_article_sentiment_score(article)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score == 0
+        assert article.status == Article.STATUS_SENTIMENT_ERROR
+
     @vcr.use_cassette(f"{VCR_ROOT}/article_raw_response__success.yaml")
     def test_get_article_raw_response__success(self):
         parser = ParseContent()
