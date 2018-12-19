@@ -171,7 +171,7 @@ class ProdConfig(PostgresDBConfig, CeleryConfig, BaseConfig):
     STATIC_ROOT = "staticfiles/"
     STATIC_URL = ENV.str("STATIC_URL", "/static/")
 
-    if ENV.str("BUGSNAG_API_KEY"):
+    if ENV.str("BUGSNAG_API_KEY", None):
         BUGSNAG = {"api_key": ENV.str("BUGSNAG_API_KEY"), "project_root": BASE_DIR}
 
         MIDDLEWARE = [
