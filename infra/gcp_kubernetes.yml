@@ -22,7 +22,7 @@ spec:
             # Update this each time you wish to redeploy to force a rolling update
             # See: https://github.com/kubernetes/kubernetes/issues/33664
             - name: BUILD_NUMBER
-              value: '11'
+              value: '12'
             - name: REQUIREMENTS_PATH
               value: ./requirements/prod.txt
             - name: DJANGO_SETTINGS_MODULE
@@ -76,7 +76,7 @@ spec:
             # Update this each time you wish to redeploy to force a rolling update
             # See: https://github.com/kubernetes/kubernetes/issues/33664
             - name: BUILD_NUMBER
-              value: '11'
+              value: '12'
             - name: REQUIREMENTS_PATH
               value: ./requirements/prod.txt
             - name: DJANGO_SETTINGS_MODULE
@@ -133,7 +133,7 @@ spec:
             # Update this each time you wish to redeploy to force a rolling update
             # See: https://github.com/kubernetes/kubernetes/issues/33664
             - name: BUILD_NUMBER
-              value: '11'
+              value: '12'
             - name: REQUIREMENTS_PATH
               value: ./requirements/prod.txt
             - name: DJANGO_SETTINGS_MODULE

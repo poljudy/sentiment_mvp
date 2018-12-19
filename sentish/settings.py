@@ -171,6 +171,13 @@ class ProdConfig(PostgresDBConfig, CeleryConfig, BaseConfig):
     STATIC_ROOT = "staticfiles/"
     STATIC_URL = ENV.str("STATIC_URL", "/static/")
 
+    if ENV.str("BUGSNAG_API_KEY"):
+        BUGSNAG = {"api_key": ENV.str("BUGSNAG_API_KEY"), "project_root": BASE_DIR}
+
+        MIDDLEWARE = [
+            "bugsnag.django.middleware.BugsnagMiddleware"
+        ] + BaseConfig.MIDDLEWARE
+
 
 class TestConfig(PostgresDBConfig, BaseConfig):
     """Django Configuration class with specifics for the test suite environment."""
