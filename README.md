@@ -48,3 +48,42 @@ Code formating is done with [Black](https://github.com/ambv/black) and an additi
 
 Project uses [Django-environ](https://github.com/joke2k/django-environ/). That way all required environment variables for the project are available in `.env` file.
 `.env.template` file exists to show which env vars are required to exist in the real `.env`.
+
+### Celery Beat
+
+Celery Beat is used to periodically fetch fresh articles and get their sentiment score.
+
+Redis is used as the broker since it's much easier to set it up on GCP than full-on RabbitMQ.
+
+### Deployment
+
+Deployed on GCP.
+
+You need to have the following tools installed:
+
+    - Google Cloud SDK - https://cloud.google.com/sdk/
+    - Terraform - https://www.terraform.io/downloads.html
+    - Kubectl - https://kubernetes.io/docs/tasks/tools/install-kubectl/
+
+#### Infra
+
+From GCP Console `gcp_credentials.json` file needs to be obtained before using `terraform`.
+
+Once credentials are obtained, from `/infra` repo, `terraform` commands can be run.
+
+Run
+
+```bash
+terraform apply
+```
+
+to set the infra or modify it.
+
+#### (Re)deplyoment
+
+Main app and celery worker/beat are deplyed in k8s cluster.
+For a quick deplyoment, a shortcut make target was created:
+
+```bash
+make deploy
+```
