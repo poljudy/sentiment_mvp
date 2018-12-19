@@ -59,9 +59,9 @@ Project uses [Django-environ](https://github.com/joke2k/django-environ/). That w
 
 ### Celery Beat
 
-Celery Beat is used to periodically fetch fresh articles and get their sentiment score.
+[Celery Beat](http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html) is used to periodically fetch fresh articles and get their sentiment score.
 
-Redis is used as the broker since it's much easier to set it up on GCP than full-on RabbitMQ.
+Redis is used as the broker since it's much easier to set it up on GCP than a full-blown RabbitMQ.
 
 ### Deployment
 
