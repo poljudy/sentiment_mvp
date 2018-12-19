@@ -36,4 +36,4 @@ lib64
 .pre-commit-config.yaml
 
 celerybeat.pid
-terraform
+*/infra
