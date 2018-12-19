@@ -61,3 +61,14 @@ django_shell: ## `python manage.py shell` command inside the container
 
 django_shell_plus: ## `python manage.py shell_plus` command inside the container
 	$(MAKE) COMMAND="shell_plus" _django_manage
+
+deploy: ## build new Docker.prod image and re-deploy to GCP kubernetes
+	@( read -p "Have you bumped BUILD_NUMBER in infra/gcp_kubernetes.yml? [y/N]: " sure && case "$$sure" in [yY]) true;; *) false;; esac )
+	gcloud container clusters get-credentials gke-sentish --zone europe-west2-a --project sentish
+	docker build -t gcr.io/sentish/sentish-app -f Dockerfile.prod .
+	docker push gcr.io/sentish/sentish-app
+	# if nothing is changed in k8s config, BUILD_NUMBER in infra/gcp_kubernetes.yml must be bumped
+	kubectl apply -f infra/gcp_kubernetes.yml
+	# stage kubernetess config with new build number
+	git add infra/gcp_kubernetes.yml
+	@echo "Please commit build number."

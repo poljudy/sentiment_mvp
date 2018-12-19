@@ -1,0 +1,226 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: sentish
+  labels:
+    app: sentish
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: sentish
+    spec:
+      containers:
+      - name: sentish-app
+        image: gcr.io/sentish/sentish-app
+        command: ["gunicorn", "-b", "0.0.0.0:8080", "sentish.wsgi:application"]
+        imagePullPolicy: Always
+        command: ["/bin/sh"]
+        args: ["-c", "python manage.py migrate && gunicorn -b 0.0.0.0:8080 sentish.wsgi:application"]
+        env:
+            # Update this each time you wish to redeploy to force a rolling update
+            # See: https://github.com/kubernetes/kubernetes/issues/33664
+            - name: BUILD_NUMBER
+              value: '10'
+            - name: REQUIREMENTS_PATH
+              value: ./requirements/prod.txt
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_SETTINGS_MODULE
+            - name: DJANGO_CONFIGURATION
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_CONFIGURATION
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: SECRET_KEY
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PASSWORD
+        ports:
+        - containerPort: 8080
+
+      - name: celery
+        image: gcr.io/sentish/sentish-app
+        command: ["celery", "-A", "sentish", "worker", "-l", "info"]
+        imagePullPolicy: Always
+        env:
+            # Update this each time you wish to redeploy to force a rolling update
+            # See: https://github.com/kubernetes/kubernetes/issues/33664
+            - name: BUILD_NUMBER
+              value: '10'
+            - name: REQUIREMENTS_PATH
+              value: ./requirements/prod.txt
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_SETTINGS_MODULE
+            - name: DJANGO_CONFIGURATION
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_CONFIGURATION
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: SECRET_KEY
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PASSWORD
+            - name: CELERY_REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: CELERY_REDIS_URL
+
+      - name: celery-beat
+        image: gcr.io/sentish/sentish-app
+        command: ["celery", "-A", "sentish", "beat", "-l", "info"]
+        imagePullPolicy: Always
+        env:
+            # Update this each time you wish to redeploy to force a rolling update
+            # See: https://github.com/kubernetes/kubernetes/issues/33664
+            - name: BUILD_NUMBER
+              value: '10'
+            - name: REQUIREMENTS_PATH
+              value: ./requirements/prod.txt
+            - name: DJANGO_SETTINGS_MODULE
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_SETTINGS_MODULE
+            - name: DJANGO_CONFIGURATION
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: DJANGO_CONFIGURATION
+            - name: SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: SECRET_KEY
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_HOST
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PORT
+            - name: POSTGRES_DB
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: POSTGRES_PASSWORD
+            - name: CELERY_REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: env
+                  key: CELERY_REDIS_URL
+
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        imagePullPolicy: Always
+        command: ["/cloud_sql_proxy",
+                  "-instances=sentish:europe-west2:sentish-master=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: cloudsql-oauth-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+          - name: ssl-certs
+            mountPath: /etc/ssl/certs
+          - name: cloudsql
+            mountPath: /cloudsql
+
+      volumes:
+        - name: cloudsql-oauth-credentials
+          secret:
+            secretName: cloudsql-oauth-credentials
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs
+        - name: cloudsql
+          emptyDir:
+
+---
+
+# [START service]
+apiVersion: v1
+kind: Service
+metadata:
+  name: sentish
+  labels:
+    app: sentish
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 8080
+  selector:
+    app: sentish
+# [END service]
