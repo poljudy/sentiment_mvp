@@ -71,6 +71,32 @@ class SentimentCalculateTestCase(TestCase):
 
 
 class ParseContentTestCase(TestCase):
+    @vcr.use_cassette(f"{VCR_ROOT}/parse_new_article__success.yaml")
+    def test_parse_new_article__success(self):
+        article = ArticleFactory(
+            uri="https://www.forbes.com/sites/toddmillay/2018/12/17/instead-of-predicting-the-future-learn-from-the-past/",
+            status=Article.STATUS_CREATED,
+        )
+
+        parser = ParseContent()
+        parser.parse_new_article(article)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score != 0
+        assert article.status == Article.STATUS_SENTIMENT_SET
+
+    def test_parse_new_article__bad_uri(self):
+        article = ArticleFactory(uri="https://example", status=Article.STATUS_CREATED)
+
+        parser = ParseContent()
+        parser.parse_new_article(article)
+
+        article.refresh_from_db()
+
+        assert article.sentiment_score == 0
+        assert article.status == Article.STATUS_RESPONSE_ERROR
+
     @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__success.yaml")
     def test_set_article_sentiment_score__success(self):
         article = ArticleFactory(
