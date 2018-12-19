@@ -9,7 +9,10 @@ VCR_ROOT = "content/tests/fixtures/vcr"
 
 
 class SentimentCalculateTestCase(TestCase):
-    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__success.yaml")
+    @vcr.use_cassette(
+        f"{VCR_ROOT}/get_sentiment__success.yaml",
+        filter_post_data_parameters=["apikey"],
+    )
     def test_get_and_set_sentiment__success(self):
         article = ArticleFactory(
             status=Article.STATUS_CONTENT_FETCHED,
@@ -23,7 +26,10 @@ class SentimentCalculateTestCase(TestCase):
 
         assert article.status == Article.STATUS_SENTIMENT_SET
 
-    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__bad_url.yaml")
+    @vcr.use_cassette(
+        f"{VCR_ROOT}/get_sentiment__bad_url.yaml",
+        filter_post_data_parameters=["apikey"],
+    )
     @override_settings(WATSON_URL="https://example.com")
     def test_get_and_set_sentiment__bad_url(self):
         article = ArticleFactory(status=Article.STATUS_CONTENT_FETCHED)
@@ -71,7 +77,10 @@ class SentimentCalculateTestCase(TestCase):
 
 
 class ParseContentTestCase(TestCase):
-    @vcr.use_cassette(f"{VCR_ROOT}/parse_new_article__success.yaml")
+    @vcr.use_cassette(
+        f"{VCR_ROOT}/parse_new_article__success.yaml",
+        filter_post_data_parameters=["apikey"],
+    )
     def test_parse_new_article__success(self):
         article = ArticleFactory(
             uri="https://www.forbes.com/sites/toddmillay/2018/12/17/instead-of-predicting-the-future-learn-from-the-past/",
@@ -97,7 +106,10 @@ class ParseContentTestCase(TestCase):
         assert article.sentiment_score == 0
         assert article.status == Article.STATUS_RESPONSE_ERROR
 
-    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__success.yaml")
+    @vcr.use_cassette(
+        f"{VCR_ROOT}/get_sentiment__success.yaml",
+        filter_post_data_parameters=["apikey"],
+    )
     def test_set_article_sentiment_score__success(self):
         article = ArticleFactory(
             status=Article.STATUS_CONTENT_FETCHED,
@@ -112,7 +124,10 @@ class ParseContentTestCase(TestCase):
         assert article.sentiment_score != 0
         assert article.status == Article.STATUS_SENTIMENT_SET
 
-    @vcr.use_cassette(f"{VCR_ROOT}/get_sentiment__bad_url.yaml")
+    @vcr.use_cassette(
+        f"{VCR_ROOT}/get_sentiment__bad_url.yaml",
+        filter_post_data_parameters=["apikey"],
+    )
     @override_settings(WATSON_URL="https://example.com")
     def test_set_article_sentiment_score__error(self):
         article = ArticleFactory(

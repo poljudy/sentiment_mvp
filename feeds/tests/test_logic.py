@@ -26,7 +26,7 @@ class ParseFeedsTestCase(TestCase):
         parser.parse_feeds()
 
         assert FeedItem.objects.filter(feed=feed_1).count() == 20
-        assert FeedItem.objects.filter(feed=feed_2).count() == 99
+        assert FeedItem.objects.filter(feed=feed_2).count() == 101
 
     @vcr.use_cassette(f"{VCR_ROOT}/fetch_feed__success.yaml")
     def test_fetch_feed_items__success(self):
