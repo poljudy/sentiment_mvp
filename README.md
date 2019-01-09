@@ -57,6 +57,23 @@ Code formating is done with [Black](https://github.com/ambv/black) and an additi
 Project uses [Django-environ](https://github.com/joke2k/django-environ/). That way all required environment variables for the project are available in `.env` file.
 `.env.template` file exists to show which env vars are required to exist in the real `.env`.
 
+Example of local `.env` file that is needed to get the project running with Docker is as follows:
+
+```bash
+DJANGO_SETTINGS_MODULE=sentish.settings
+DJANGO_CONFIGURATION=DevConfig
+SECRET_KEY=123456_dummy_654321
+
+POSTGRES_HOST=postgres
+POSTGRES_DB=sentish
+POSTGRES_USER=sentish
+POSTGRES_PASSWORD=sentish
+
+CELERY_REDIS_URL=redis://redis:6379/0
+
+WATSON_IAM_APIKEY=enter_your_api_key
+```
+
 ### Celery Beat
 
 [Celery Beat](http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html) is used to periodically fetch fresh articles and get their sentiment score.
