@@ -1,5 +1,5 @@
 celery[redis]==4.2.1
-Django==2.1.4
+Django==2.1.5
 django-configurations==2.1
 django-environ==0.4.5
 feedparser==5.2.1
