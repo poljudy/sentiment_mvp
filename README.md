@@ -14,7 +14,7 @@ App periodically fetches newest articles from an online publication (Forbes). Fo
 
 Second periodical task fetches the content of the articles, cleans it and uses [IBM Watson's NLU](https://www.ibm.com/watson/services/natural-language-understanding/) to get a sentiment score.
 
-All processed articles with their accompanying scores are available [online](https://sentish.solvomon.com/).
+~~All processed articles with their accompanying scores are available [online](https://sentish.solvomon.com/).~~
 
 ## Notes
 
